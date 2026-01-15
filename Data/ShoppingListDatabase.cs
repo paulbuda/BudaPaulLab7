@@ -88,5 +88,12 @@ namespace BudaPaulLab7.Data
                 + " on P.ID = LP.ProductID where LP.ShopListID = ?",
                 shoplistid);
         }
+
+        public Task<int> DeleteListProductAsync(int shoplistid, int productid)
+        {
+            return _database.ExecuteAsync(
+                "DELETE FROM ListProduct WHERE ShopListID = ? AND ProductID = ?",
+                shoplistid, productid);
+        }
     }
 }

@@ -31,7 +31,16 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Add/Choose Item to buy" MaximumWidthRequest="300"
-                Clicked="OnChooseButtonClicked"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Text="Add/Choose Item to buy"
+                    Clicked="OnChooseButtonClicked"/>
+            <Button Grid.Column="1"
+                    Text="Delete Item"
+                    Clicked="OnDeleteItemButtonClicked"/>
+        </Grid>
     </StackLayout>
 </ContentPage>

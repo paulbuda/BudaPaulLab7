@@ -39,4 +39,27 @@ public partial class ListPage : ContentPage
 			BindingContext = new Product()
 		});
 	}
+
+	async void OnDeleteItemButtonClicked(object sender, EventArgs e)
+	{
+		if (listView.SelectedItem != null)
+		{
+			var selectedProduct = (Product)listView.SelectedItem;
+			var shopList = (ShopList)BindingContext;
+
+			bool answer = await DisplayAlert("Confirm Delete", 
+				$"Are you sure you want to delete '{selectedProduct.Description}' from this shopping list?", 
+				"Yes", "No");
+
+			if (answer)
+			{
+				await App.Database.DeleteListProductAsync(shopList.ID, selectedProduct.ID);
+				listView.ItemsSource = await App.Database.GetListProductsAsync(shopList.ID);
+			}
+		}
+		else
+		{
+			await DisplayAlert("No Selection", "Please select an item to delete.", "OK");
+		}
+	}
 }
