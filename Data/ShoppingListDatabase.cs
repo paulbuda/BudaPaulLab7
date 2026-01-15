@@ -113,5 +113,10 @@ namespace BudaPaulLab7.Data
                 return _database.InsertAsync(shop);
             }
         }
+
+        internal async Task DeleteShopAsync(Shop shop)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

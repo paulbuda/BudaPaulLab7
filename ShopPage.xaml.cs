@@ -17,6 +17,21 @@ public partial class ShopPage : ContentPage
 		await Navigation.PopAsync();
 	}
 
+	async void OnDeleteButtonClicked(object sender, EventArgs e)
+	{
+		var shop = (Shop)BindingContext;
+		bool answer = await DisplayAlert("Confirm Delete", 
+			$"Are you sure you want to delete '{shop.ShopName}'?", 
+			"Yes", "No");
+
+		if (answer)
+		{
+			// Fix: Use the correct method for deleting a Shop
+			await App.Database.DeleteShopAsync(shop);
+			await Navigation.PopAsync();
+		}
+	}
+
 	async void OnShowMapButtonClicked(object sender, EventArgs e)
 	{
 		var shop = (Shop)BindingContext;
