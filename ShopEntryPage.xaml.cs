@@ -1,4 +1,5 @@
 using BudaPaulLab7.Models;
+using Microsoft.Maui.Controls; // Ensure this is present for ContentPage and InitializeComponent
 
 namespace BudaPaulLab7;
 
@@ -6,7 +7,7 @@ public partial class ShopEntryPage : ContentPage
 {
 	public ShopEntryPage()
 	{
-		InitializeComponent();
+		InitializeComponent(); // This requires a corresponding ShopEntryPage.xaml file
 	}
 
 	protected override async void OnAppearing()

@@ -15,6 +15,7 @@ namespace BudaPaulLab7.Data
             _database.CreateTableAsync<ShopList>().Wait();
             _database.CreateTableAsync<Product>().Wait();
             _database.CreateTableAsync<ListProduct>().Wait();
+            _database.CreateTableAsync<Shop>().Wait();
         }
 
         public Task<List<ShopList>> GetShopListsAsync()
@@ -94,6 +95,23 @@ namespace BudaPaulLab7.Data
             return _database.ExecuteAsync(
                 "DELETE FROM ListProduct WHERE ShopListID = ? AND ProductID = ?",
                 shoplistid, productid);
+        }
+
+        public Task<List<Shop>> GetShopsAsync()
+        {
+            return _database.Table<Shop>().ToListAsync();
+        }
+
+        public Task<int> SaveShopAsync(Shop shop)
+        {
+            if (shop.ID != 0)
+            {
+                return _database.UpdateAsync(shop);
+            }
+            else
+            {
+                return _database.InsertAsync(shop);
+            }
         }
     }
 }
