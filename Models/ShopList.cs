@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace BudaPaulLab7.Models
 {
@@ -12,5 +13,7 @@ namespace BudaPaulLab7.Models
         [MaxLength(250), Unique]
         public string Description { get; set; }
         public DateTime Date { get; set; }
+        [ForeignKey(typeof(Shop))]
+        public int ShopID { get; set; }
     }
 }
