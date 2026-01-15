@@ -1,0 +1,52 @@
+using BudaPaulLab7.Models;
+using Plugin.LocalNotification;
+
+namespace BudaPaulLab7;
+
+public partial class ShopPage : ContentPage
+{
+	public ShopPage()
+	{
+		InitializeComponent();
+	}
+
+	async void OnSaveButtonClicked(object sender, EventArgs e)
+	{
+		var shop = (Shop)BindingContext;
+		await App.Database.SaveShopAsync(shop);
+		await Navigation.PopAsync();
+	}
+
+	async void OnShowMapButtonClicked(object sender, EventArgs e)
+	{
+		try
+		{
+			var shop = (Shop)BindingContext;
+			var address = shop.Adress;
+			
+			if (string.IsNullOrWhiteSpace(address))
+			{
+				await DisplayAlert("Error", "Shop address is missing", "OK");
+				return;
+			}
+
+			var locations = await Geocoding.Default.GetLocationsAsync(address);
+			var location = locations?.FirstOrDefault();
+			
+			if (location == null)
+			{
+				await DisplayAlert("Error", "Could not find location for this address", "OK");
+				return;
+			}
+
+			var options = new MapLaunchOptions { Name = "Magazinul meu preferat" };
+			// var myLocation = await Geolocation.GetLocationAsync();
+			var myLocation = new Location(46.7731796289, 23.6213886738);
+			await Map.Default.OpenAsync(location, options);
+		}
+		catch (Exception ex)
+		{
+			await DisplayAlert("Error", $"Unable to open map: {ex.Message}", "OK");
+		}
+	}
+}
